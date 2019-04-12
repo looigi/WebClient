@@ -1,0 +1,23 @@
+<div *ngIf="(!loadingSites) && (!loadingTechs)" style="height: 100%;">
+  <div class="col-md-6" style="height: 100%; padding: 0px;">
+    <map-technology [icoPath]="icoPath"
+                    [icoCust]="icoCust"
+                    [maskName]="'tech'"
+                    [sitesList]="sitesList"
+                    (boundVisibleChange)="filterTechnology($event)"
+    ></map-technology>
+  </div>
+
+  <!-- </div> -->
+  <div class="col-md-6" style="height: 100%; padding: 0px;">
+    <ants-grid
+      #Grid1
+      [title]="'Technology'"
+      [maskName]="'technology-viewer'"
+      [idProperty] = "'siteId'"
+      [data]="dataResult"
+      [maskName]="maskName"
+    >
+    </ants-grid>
+  </div>
+</div>

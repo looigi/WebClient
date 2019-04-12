@@ -1,0 +1,41 @@
+<p class="text-center" *ngIf="requestInProgress">
+  Loading...<br>
+  <img src="assets/img/img/loader.gif" height="60">
+</p>
+
+<sebm-google-map *ngIf="!requestInProgress"
+                 [zoom]="1"
+                 [styles]="styles"
+                 [latitude]="latitude"
+                 [longitude]="longitude"
+                 [disableDefaultUI]="true"
+                 [streetViewControl]="false"
+                 [zoomControl]="true">
+
+
+  <sebm-google-map-marker *ngFor="let marker of markers.DataTable"
+                          [latitude]="marker.latitude"
+                          [longitude]="marker.longitude"
+                          [title]="cutValue(markerCategory + ': ' + marker[markerCategory])"
+                          [zIndex]='98'
+                          iconUrl="assets/img/maps/{{marker[markerCategory + '.Status']}}.png"
+                          [opacity]="0.8">
+
+            <!--(markerClick)="clickedMarker(marker, infoMarker)" >
+              <sebm-google-map-info-window #infoMarker [disableAutoPan]="true">
+              <div class="h5">{{dimension + ': ' + mark er[dimension]}}</div>
+              <hr class="separator">
+              <div [ngClass]="{h5: markerCategory, h6: !markerCategory}">
+              {{markerCategory + ': ' + marker[markerCategory] + ' - Status: ' + marker[markerCategory + '.Status']}}
+              </div>
+            </sebm-google-map-info-window> -->
+  </sebm-google-map-marker>
+
+  <sebm-google-map-marker *ngFor="let mark2 of markers2"
+    [latitude]="mark2.latitude"
+    [longitude]="mark2.longitude"
+    [zIndex]='99'
+    [title]="mark2.title"
+    iconUrl="assets/img/maps/hexagon-outline.png" >
+  </sebm-google-map-marker>
+</sebm-google-map>

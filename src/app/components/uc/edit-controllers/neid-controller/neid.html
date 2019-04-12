@@ -1,0 +1,53 @@
+<div class="form-group col-md-11">
+    <!-- <label>
+      {{name}}
+      <i *ngIf="this.data.payload.PrmList[0].Description">
+        {{' [' + this.data.payload.PrmList[0].Description + ']'}}
+      </i>
+      Step 1: Click on a site on the map
+    </label>
+
+    <p class="text-center" *ngIf="loadingSites || loadingTechs">
+      Loading...{{loadingSites + ' ' + loadingTechs}}<br>
+      <img src="assets/img/img/loader.gif" height="60">
+    </p> -->
+
+  <div class="row" >
+    <div classs="row">
+        <div class="col-md-7" style="height: 80vh">
+          <div class="panel panel-default"  style="height: 80vh">
+            <div class="panel-heading">
+                <strong>
+                Step 1: Click on a site on the map
+                </strong>
+            </div>
+            <map-technology #map *ngIf="sitesList && plmnTechList"
+                            [icoPath]="icoPath"
+                            [maskName]="'neid'"
+                            [icoCust]="icoCust"
+                            [sitesList]="sitesList"
+                            (changeSelection)="getSitePlmnTechList($event)">
+            </map-technology>
+          </div>
+        </div>
+        <div class="col-md-5 col-no-space-sx; height: 90vh;">
+          <!-- *ngIf="sitePlmnTechList" -->
+          <div style="height: 45vh; overflow: auto;">
+            <tech-list
+                      [operatorTechList]="sitePlmnTechList"
+                      (changeSelection)="setSitePlmnTech($event)">
+            </tech-list>
+          </div>
+
+          <!-- *ngIf="!loadingTechName" -->
+          <div style="height: 45vh; overflow: auto; margin-top: 5px;">
+            <tuple-tech-list
+                      [tupleTechList]="roleTuplePlmnTechList"
+                      (roleSiteSelected) = "updateRoleTupleTechList($event)"
+                      (resetSiteSelected) = "resetRoleTupleTechList($event)">
+            </tuple-tech-list>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

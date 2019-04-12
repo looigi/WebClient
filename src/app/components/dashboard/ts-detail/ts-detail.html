@@ -1,0 +1,36 @@
+<div *ngIf="ts" style="width: 100%; height: 100% !important; padding-top: 3px; /* border: 1px solid blue; */ overflow-x: hidden;">
+  <div class="btn-toolbar pull-right" >
+    <div style="float: left; margin-right: 10px; margin-top: 7px;">
+      {{title}}
+    </div>
+    <div style="float: right;">
+      <button type="button"
+              class="btn btn-danger"
+              (click)="modalService.modalShow({'modal': 'tsDetail', 'action': 'close'})"
+      >
+        Close <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+
+    <kendo-splitter orientation="horizontal" size="100%" style="width: 100%; height: 89vh;">
+        <kendo-splitter-pane [collapsible]="true" size="35%" style="overflow: hidden;">
+          <ants-grid
+            #Grid4
+            [title]="'TS Files'"
+            [maskName]="maskName"
+            [data]="tsFiles"
+          ></ants-grid>
+
+          <div *ngIf="!tsFiles" class="k-i-loading"></div>
+        </kendo-splitter-pane>
+
+        <kendo-splitter-pane style="overflow: hidden;">
+            <!-- <textarea *ngIf="fileText" style="width:99%; height: 99%; resize: none;">{{fileText}}</textarea>
+            <frameset *ngIf="fileText" style="width:99%; height: 99%;">
+              <frame [src]="fileText" ></frame>
+            </frameset> -->
+            <iframe *ngIf="url" width="99%" height="99%" [src]="url"></iframe>
+        </kendo-splitter-pane>
+      </kendo-splitter>
+</div>

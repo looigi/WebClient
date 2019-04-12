@@ -1,0 +1,21 @@
+<!-- <p class="text-center" *ngIf="requestInProgress">
+  Loading...<br>
+  <img src="assets/img/img/loader.gif" height="60">
+</p> -->
+
+<ants-grid
+  *ngIf="!requestInProgress"
+  [idProperty] = "'ANTS_ID'"
+  [title]="title"
+  [data]="serverResponse"
+  [dataAdd]="dataAdd"
+  [icoPath]="'assets/img/icons/'"
+  (itemSelected)="selectionChanged($event)"
+  (selectionChanged)="newState($event)"
+  (addClicked)="addElement($event)"
+  (editClicked)="editElement($event)"
+  (delClicked)="delElelemnt($event)"
+></ants-grid>
+<!--<ants-edit-modal-form></ants-edit-modal-form>-->
+
+<div *ngIf="requestInProgress" class="k-i-loading"></div>

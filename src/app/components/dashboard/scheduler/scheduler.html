@@ -1,0 +1,31 @@
+<kendo-splitter orientation="vertical" style="height: 100%;">
+  <kendo-splitter-pane size="50%" [collapsible]='true'>
+      <test-scenario [filter]="td"
+                     (itemSelected)='onTestScenarioSelected($event)'
+      ></test-scenario>
+  </kendo-splitter-pane>
+
+  <kendo-splitter-pane>
+    <kendo-splitter orientation="horizontal" style="width: 100%;" >
+        <kendo-splitter-pane size="18%" [collapsible]='true' style="overflow: hidden;">
+          <ants-grid
+            #Grid1
+            [title]="titleReport"
+            [data]="tsDays"
+            [maskName]="maskName"
+            [minimized]="true"
+            (itemSelected)=selectionChangedByDay($event)
+          ></ants-grid>
+
+          <div *ngIf="loadingDays && !tsDays" class="k-i-loading"></div>
+        </kendo-splitter-pane>
+
+      <kendo-splitter-pane style="overflow: hidden;">
+          <tc-run-list *ngIf="ts" [filter]="ts" [father]="'scheduler'">
+          </tc-run-list>
+      </kendo-splitter-pane>
+
+      </kendo-splitter>
+    </kendo-splitter-pane>
+</kendo-splitter>
+

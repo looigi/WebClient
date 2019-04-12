@@ -1,0 +1,62 @@
+.table-fixed thead {
+  width: 490px;
+}
+
+.table-fixed tbody {
+  height: 230px;
+  overflow-y: auto;
+  width: 520px;
+}
+
+.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+  display: block;box-sizing: border-box;
+}
+
+.table-fixed tbody td, .table-fixed thead > tr > th {
+  float: left;
+}
+
+.table th, .table td {
+  padding: 5px;
+}
+
+.table-fixed th {
+  width: 70px;
+  border: 1px solid #ddd !important;
+}
+
+.table-fixed td {
+  width: 70px;
+  border: none !important;
+  height: 100%;
+}
+
+.table-fixed td > .day-container {
+  position: relative;
+  width: 100%;
+  display: block;
+}
+
+.table-fixed td > .day-container > .time-container {
+  position: absolute;
+  display: block;
+  padding-bottom: 1px;
+  border: 1px solid #459b30;
+  border-radius: 3px;
+  margin-bottom: 1px;
+}
+
+.table-fixed td > .day-container > .time-container > .btn-xs{
+  margin-top: 3px;
+  margin-right: 3px;
+}
+
+.btn-xs {
+  padding: 0 2px !important;
+  font-size: 9px !important;
+  margin-left: 2px;
+  float: right;
+}
+
+
+

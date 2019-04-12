@@ -1,0 +1,16 @@
+<div class="form-group col-md-12">
+  <label>{{name}}:
+    <i style="font-style: normal; font-weight: normal;" *ngIf="this.data.payload.PrmList[0].Description">
+      {{' ' + this.data.payload.PrmList[0].Description + ' '}}
+    </i>
+  </label>
+  <select #lookup class="form-control"
+          [(ngModel)]="selectedItem"
+          (change)="this.data.payload.PrmList[0].Value=selectedItem;this.submit();"
+  >
+    <option *ngFor="let item of options"
+            [value]="item.CODE">
+      {{ item.VALUE }}
+    </option>
+  </select>
+</div>

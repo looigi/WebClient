@@ -1,0 +1,20 @@
+<div style="height: 100%;">
+  <!-- <p class="text-center" *ngIf="eventSimInProgress">
+    Loading...<br>
+    <img src="assets/img/img/loader.gif" height="60">
+  </p>
+
+  <h3 *ngIf="!eventSim && !eventSimInProgress">...No Data!</h3> -->
+
+  <ants-grid
+    #Grid1
+    [title]="'Sim'"
+    [data]="eventSim"
+    [maskName]="maskName"
+    [icoPath]="'assets/img/icons/'"
+    (itemSelected)="selectionChanged($event)"
+    editable="true"
+  ></ants-grid>
+
+  <div *ngIf="eventSimInProgress" class="k-i-loading"></div>
+</div>

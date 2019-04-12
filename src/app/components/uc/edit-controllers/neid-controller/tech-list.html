@@ -1,0 +1,30 @@
+<!-- *ngIf="operatorTechList" -->
+<div class="panel panel-default" >
+  <div class="panel-heading">
+      <strong>Step 2: select the PLMN/Tech you want to test</strong>
+  </div>
+  <div class="panel-body panel-no-space">
+    <table class="table table-condensed table-hover table-no-space">
+      <thead>
+      <tr>
+        <th>Site ID</th>
+        <th>Operator</th>
+        <th>PLMN</th>
+        <th>Tech</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let operatorTech of operatorTechList let i=index"
+          [ngClass]="getColorClass(operatorTech.portStatus)"
+          [ngStyle]="{'font-weight': (operatorTechSelected==i)? 'bold' :''}"
+          (click)="selectOperatorTech(i)"
+      >
+        <td>{{operatorTech.siteId}}</td>
+        <td>{{operatorTech.plmnName}}</td>
+        <td>{{operatorTech.plmnCode}}</td>
+        <td>{{operatorTech.techName}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

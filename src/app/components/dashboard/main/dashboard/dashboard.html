@@ -1,0 +1,46 @@
+<div style="display: flex; flex-direction: column; height: 100vh; width: 100%;">
+  <div style="overflow:hidden; padding: 7px; background-color: #f8f8f8; width: 100%;">
+    <router-outlet name='header'></router-outlet>
+  </div>
+
+  <div style="overflow:hidden; width: 100%; flex-grow: 1; height: 100% !important;">
+    <kendo-splitter
+        orientation="horizontal" size="100%" [style.height.%]="getHeight()">
+        <kendo-splitter-pane  [collapsible]="true" size="20%" style="overflow: hidden;">
+          <div style="width: 100%; height: 100%; overflow: auto;">
+            <router-outlet name='menu'></router-outlet>
+          </div>
+        </kendo-splitter-pane>
+
+        <kendo-splitter-pane style="overflow:hidden;">
+          <div style="width: 100%; height: 100%; overflow: hidden;">
+            <router-outlet name='page'></router-outlet>
+          </div>
+        </kendo-splitter-pane>
+    </kendo-splitter>
+
+    <div *ngIf="tsEditorShow" style="overflow: auto; width: 100%; height: 100%; background-color: white;
+      padding-top: 3px; padding-left: 13px; padding-right: 15px;">
+      <ts-editor
+                [testScenario]="testScenarioToEdit"
+      ></ts-editor>
+    </div>
+
+    <div *ngIf="tcDetailShow" style="overflow: auto; width: 100%; height: 100%; background-color: white;">
+      <tc-run-detail
+                    [tcRunId]="tcRunId"
+      ></tc-run-detail>
+    </div>
+
+    <div *ngIf="tsDetailShow" style="overflow: auto; width: 100%; height: 100%; background-color: white;">
+      <ts-detail
+                    [ts]="ts"
+      ></ts-detail>
+    </div>
+  </div>
+</div>
+
+  <div style=" width: 100%; overflow:hidden;">
+    <router-outlet name='footer'></router-outlet>
+  </div>
+

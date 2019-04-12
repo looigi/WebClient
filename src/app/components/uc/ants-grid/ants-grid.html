@@ -1,0 +1,376 @@
+    <kendo-grid *ngIf="gridData"
+      #GridGen
+      [kendoGridBinding]="gridData"
+      [pageSize]="take"
+      [skip]="skip"
+      [selectable]="true"
+      [scrollable]="'scrollable'"
+      [sort]="sort"
+      [filter]="filter"
+      [sortable]="true"
+      [resizable]="true"
+      [reorderable]="true"
+      [filterable]="rowButtonsConfig2.showFilter"
+      [columnMenu]="rowButtonsConfig2.showFilter"
+      (dataStateChange)="dataStateChange($event)"
+      (selectionChange)="selectionChanged($event)"
+      (cellClick)="cellClick($event)"
+      (edit)="editHandler()"
+      (remove)="removeHandler()"
+      (columnResize)="onResize($event)"
+      (columnReorder)="onReorder($event)"
+      (father)="''"
+      [kendoGridSelectBy]="mySelectionKey"
+      [selectedKeys]="mySelection"
+      (pageChange)="pageChange($event)"
+      [pageable]="{
+        buttonCount: 10,
+        info: true,
+        pageSizes: [10,25,50,100, 200, 500],
+        numeric: false
+      }"
+      >
+
+      <!--
+      [kendoGridSelectBy]="mySelectionKey"
+      [selectedKeys]="mySelection"
+      -->
+
+      <kendo-grid-messages
+        noRecords="No records available (Filter is active).">
+      </kendo-grid-messages>
+
+    <ng-template kendoGridToolbarTemplate *ngIf="rowButtonsConfig2.showHeader">
+      <div kendoRippleContainer style="height: 19px;">
+        <div class="row" style="display: flex; overflow: none; height: 30px;">
+
+        <div *ngIf="minimized" class="col-md-1 c-slim">
+          <img (click)="openCloseMenu1()" src='assets/img/icons/EventLog.png' alt='' title='Open Icon Menu' class="k-button"
+            style="border: 0px; padding: 0px; cursor: pointer; height: 20px; left: 10px; position: absolute;" />
+        </div>
+
+        <div *ngIf="clickOnMenu1 || !minimized" [ngClass]="getIconClass1()" [ngStyle]="getIconStyle1()">
+        <!-- <div class="col-md-5 c-slim" style="white-space: nowrap;">
+          <div class="row">
+             <div class="col-md-12 c-slim" style="padding-bottom: 2px; overflow: hidden;">-->
+              <!--<img src='assets/img/icons/Paused.png' *ngIf="showSave" (click)="saveGridValues()" alt='' title='Save' class="k-button" style="width: 25px; border: 0px; padding: 0px; cursor: pointer; margin-left: 3px;" />
+              <img src='assets/img/icons/Paused.png' *ngIf="showSave" (click)="cancelGridValues()" alt='' title='Cancel' class="k-button" style="width: 25px; border: 0px; padding: 0px; cursor: pointer;" />-->
+              <img src='assets/img/icons/AddNew.png' *ngIf="rowButtonsConfig2.showAddnew" (click)="this.addHandler()" alt='' title='Add New' class="k-button" style="width: 25px; border: 0px; padding: 0px; cursor: pointer;" />
+              <img src='assets/img/icons/Edit.png' *ngIf="rowButtonsConfig2.showEdit" (click)="editHandler()" alt='' title='Edit' class="k-button" style="width: 25px; border: 0px; padding: 0px; cursor: pointer;" />
+              <img src='assets/img/icons/Delete.png' *ngIf="rowButtonsConfig2.showDelete" (click)="this.removeHandler()" alt='' title='Delete' class="k-button" style="width: 25px; border: 0px; padding: 0px; cursor: pointer;" />
+              <img src='assets/img/icons/View.png' *ngIf="rowButtonsConfig2.showDetails" (click)="this.detailHandler()" alt='' title='Show' class="k-button" style="width: 25px; border: 0px; padding: 0px; cursor: pointer;" />
+              <img src='assets/img/icons/Copy.png' *ngIf="rowButtonsConfig2.showCopy" (click)="this.copyScenario()" alt='' title='Copy' class="k-button" style="width: 25px; border: 0px; padding: 0px; cursor: pointer;" />
+              <img src='assets/img/icons/Run.png' *ngIf="rowButtonsConfig2.showRun" (click)="this.runScenario()" alt='' title='Run' class="k-button" style="width: 25px; border: 0px; padding: 0px; cursor: pointer;" />
+              <img src='assets/img/icons/Paused.png' *ngIf="rowButtonsConfig2.showPause && !isPaused" (click)="this.pauseScenario()" alt='' title='Pause' class="k-button" style="width: 25px; border: 0px; padding: 0px; cursor: pointer;" />
+              <img src='assets/img/icons/play.png' *ngIf="rowButtonsConfig2.showPause && isPaused" (click)="this.pauseScenario()" alt='' title='Resume' class="k-button" style="width: 25px; border: 0px; padding: 0px; cursor: pointer;" />
+              <img src='assets/img/icons/Stop.png' *ngIf="rowButtonsConfig2.showStop" (click)="this.stopTc()" alt='' title='Abort' class="k-button" style="width: 25px; border: 0px; padding: 0px; cursor: pointer;" />
+              <img src='assets/img/icons/Info.png' *ngIf="rowButtonsConfig2.showInfo" (click)="this.showInfos()" alt='' title='Show info' class="k-button" style="width: 25px; border: 0px; padding: 0px; cursor: pointer;" />
+
+              <div *ngIf="maskName == 'Ts_By_day'"  style="word-wrap: none">
+                <input type="number" id="nop"
+                  [(ngModel)]="numberOfDays" title="Set latest days to be shown"
+                  name="numberOfPagesChoice" style="width: 40px; height: 20px; margin: 1px; "
+                  (ngModelChange)="updateDaysAgo($event)" min=0 >
+                <img src='assets/img/icons/Refresh.png' (click)="updateDaysAgoClick()" alt='' title='Refresh' class="k-button" style="width: 25px; border: 0px; padding: 0px; cursor: pointer; margin-left: 3px;" />
+              </div>
+
+              <div *ngIf="maskName == 'adhoc-list-scenario'" style="word-wrap: none">
+                <input type="number" id="nop"
+                  [(ngModel)]="numberOfLatestIterations" title="Set the number of latest iterations to be shown"
+                  name="numOfLatestIterations" style="width: 40px; height: 20px; margin: 1px; "
+                  (ngModelChange)="updateLatestIterations($event)" min=0 >
+                <img src='assets/img/icons/Refresh.png' (click)="updateLatestIterationsClick()" alt='' title='Refresh' class="k-button" style="width: 25px; border: 0px; padding: 0px; cursor: pointer; margin-left: 3px;" />
+              </div>
+
+            <!--</div>
+
+            <div class="col-md-11 c-slim">
+              <span class="h4 align-middle">{{title}}</span>
+            </div>
+          </div>-->
+        </div>
+
+        <!-- <div class="col-md-3 c-slim" style="overflow: hidden; white-space:nowrap;">
+          <span title="{{tooltipLogText}}" [ngStyle]="{'color': getLogColor(), 'margin-top': '5px;'}" >{{logText}}</span>
+        </div> -->
+        <div [ngClass]="getIconClassTit()" title="{{title}}" style="text-align: center; margin-top: 3px; white-space: nowrap; overflow: hidden;">
+            {{title2}}
+        </div>
+
+        <img *ngIf="minimized" (click)="openCloseMenu2()" src='assets/img/icons/EventLog.png' alt='' title='Open Icon Menu' class="k-button"
+          style="border: 0px; padding: 0px; cursor: pointer; height: 20px; right: 1px; position: absolute;" />
+
+        <div *ngIf="clickOnMenu2 || !minimized" [ngClass]="getIconClass2()" [ngStyle]="getIconStyle2()">
+          <span *ngIf="showRowNum" [ngStyle]="{'color': getLogColor(), 'margin-top': '5px;'}" >Max rows</span>
+
+          <kendo-combobox *ngIf="showRowNum"
+            [data]="listItemsPerRowNum"
+            textField="text"
+            valueField="value"
+            [valuePrimitive]="true"
+            [(ngModel)]="numberOfRows"
+            [placeholder]="'Max rows'"
+            (selectionChange)="updateRowNum($event)"
+            style="width: 130px;">
+          </kendo-combobox>
+
+          <img *ngIf="showRowNum" (click)="reloadGridReport()" src='assets/img/icons/DownloadAll.png' alt='' title='Get all rows' class="k-button" style="width: 25px; border: 0px; padding: 0px; cursor: pointer;" />
+
+          <img *ngIf="rowButtonsConfig2.showRefresh" (click)="reloadGrid()" src='assets/img/icons/Refresh.png' alt='' title='Refresh grid' class="k-button" style="width: 25px; border: 0px; padding: 0px; cursor: pointer; margin-left: 3px;" />
+          <img (click)="GridGen.autoFitColumn(groupColumn); getWidth(); saveGrid();" src='assets/img/icons/AutoResize.png' alt='' title='Auto-Fit columns' class="k-button" style="width: 25px; border: 0px; padding: 0px; cursor: pointer;" />
+          <img kendoGridPDFCommand (click)="pdfPrint()" src='assets/img/icons/Pdf.png' alt='' title='Export to PDF (current page)' style="width: 25px; border: 0px; padding: 0px;" />
+          <img kendoGridExcelCommand src='assets/img/icons/Excel.png' alt='' title='Export to Excel (all rows)' style="width: 25px; border: 0px; padding: 0px;" />
+
+          <img *ngIf='!showSettedFilter' (click)="setFilter()" src='assets/img/icons/Filter.png' alt=''  title='Filter' class="k-button" style="width: 25px; border: 0px; padding: 0px; cursor: pointer;" />
+          <img *ngIf='showSettedFilter' (click)="setFilter()" src='assets/img/icons/filterOn.png' alt=''  title='Some columns are filtered' class="k-button" style="width: 25px; border: 0px; padding: 0px; cursor: pointer;" />
+          <img *ngIf='showSettedFilter' (click)="clearFilter()" src='assets/img/icons/filterOff.png' alt=''  title='Clear filter on columns' class="k-button" style="width: 25px; border: 0px; padding: 0px; cursor: pointer;" />
+
+          <img *ngIf="editable && !editOn" (click)="editGridOnOff()" src='assets/img/icons/lock-outline.png' alt='' title='Active Edit' class="k-button" style="width: 25px; border: 0px; padding: 0px; cursor: pointer;" />
+          <img *ngIf="editable && editOn" (click)="editGridOnOff()" src='assets/img/icons/lock-open-outline.png' alt='' title='Disactive Edit' class="k-button" style="width: 25px; border: 0px; padding: 0px; cursor: pointer;" />
+
+          <input type="checkbox" name="showFilter" [ngModel]="rowButtonsConfig2.showFilter" (change)="rowButtonsConfig2.showFilter = !rowButtonsConfig2.showFilter" style="visibility: hidden; width: 0px;">
+        </div>
+
+      </div>
+    </div>
+  </ng-template>
+
+  <kendo-grid-column-group #groupColumn title="">
+   <!-- <kendo-grid-command-column width="{{55*(rowButtonsConfig.showEdit + rowButtonsConfig.showDelete + rowButtonsConfig.showDetails)}}"
+                                *ngIf="rowButtonsConfig.showEdit || rowButtonsConfig.showDelete || rowButtonsConfig.showDetails"
+                                >
+       <ng-template kendoGridCellTemplate let-dataItem>
+         <button kendoGridEditCommand (edit)="editing" class="k-primary" *ngIf="rowButtonsConfig.showEdit">Edit</button>
+         <button kendoGridRemoveCommand *ngIf="rowButtonsConfig.showDelete">Del</button>
+         <button (click)="detailHandler(dataItem)" *ngIf="rowButtonsConfig.showDetails">Info</button>
+       </ng-template>
+     </kendo-grid-command-column> -->
+
+     <!-- [locked]="column.locked" -->
+
+     <ng-template ngFor [ngForOf]="columns" let-column>
+       <kendo-grid-column field="{{column.field}}"
+          id="{{column.idRow}}"
+          title="{{column.title}}"
+          editor="{{column.editor}}"
+          width="{{column.width}}"
+          filter="{{column.filter}}"
+          [hidden]="column.hidden"
+          (pageChange)="pageChange()"
+          (dataStateChange)="dataStateChange()">
+        <!-- filter="{{column.filter}}"
+        format="{0:yyyy-MM-dd HH:mm:ss}"-->
+
+        <ng-template #template kendoGridCellTemplate let-dataItem let-columnIndex="columnIndex" let-rowIndex="rowIndex">
+          <!-- {'background-color': getBGColorRow(dataItem), 'color': getFGColor(dataItem)} -->
+          <!-- <span>{{dataItem.ROW_ID}}</span> -->
+          <div class="cellaDiv" [ngStyle]="getCellStyle(dataItem, dataItem[column.field])">
+            <!--
+            <span *ngIf="column.icon == 'ICON_TRACE'" [ngClass]="getIconTrace(column)" [ngStyle]="{'color': getBGColor(dataItem)}">
+            </span>  -->
+
+            <img *ngIf="(!editMode[dataItem.ROW_ID] || column.isEditable == false) && column.icon && column.icon != 'ICON_TRACE' && dataItem[column.field]"
+                  class="ant-icon imgSize" src="{{column.icon + getIconString(column.icon, dataItem[column.field])}}.png"
+                  onError="this.src='assets/img/icons/FullList.png';"
+            />
+
+            <kendo-sparkline *ngIf="column.field == 'TRAILIS'"
+              style="width: 130px; height: 20px;">
+
+              <kendo-chart-area background="#FFF0">
+              </kendo-chart-area>
+
+              <kendo-chart-category-axis>
+                <kendo-chart-category-axis-item [categories]=days>
+                </kendo-chart-category-axis-item>
+              </kendo-chart-category-axis>
+
+              <kendo-chart-series>
+                <kendo-chart-series-item type="column" [gap]= 0.4 [stack]="{ type: '100%' }">
+                </kendo-chart-series-item>
+                <kendo-chart-series-item type="column" name="Failed" color="red" [data]=sFAILED[dataItem.ROW_ID]>
+                </kendo-chart-series-item>
+                <kendo-chart-series-item type="column" name="Ok" color=#248f24 [data]=sOK[dataItem.ROW_ID]>
+                </kendo-chart-series-item>
+                <kendo-chart-series-item type="column" name="Aborted" color=#e6e619 [data]=sABORT[dataItem.ROW_ID]>
+                </kendo-chart-series-item>
+              </kendo-chart-series>
+
+            </kendo-sparkline>
+
+            <kendo-sparkline *ngIf="column.field == 'TRAILISDAY'"
+              style="width: 30px; height: 20px;">
+
+              <kendo-chart-area background="#FFF0">
+              </kendo-chart-area>
+
+              <kendo-chart-category-axis>
+                <kendo-chart-category-axis-item [categories]=days_day>
+                </kendo-chart-category-axis-item>
+              </kendo-chart-category-axis>
+
+              <kendo-chart-series>
+                <kendo-chart-series-item type="column" [gap]= 0.4 [stack]="{ type: '100%' }">
+                </kendo-chart-series-item>
+                <kendo-chart-series-item type="column" name="Failed" color="red" [data]=sFAILED_DAY[dataItem.ROW_ID]>
+                </kendo-chart-series-item>
+                <kendo-chart-series-item type="column" name="Ok" color=#248f24 [data]=sOK_DAY[dataItem.ROW_ID]>
+                </kendo-chart-series-item>
+                <kendo-chart-series-item type="column" name="Aborted" color=#e6e619 [data]=sABORT_DAY[dataItem.ROW_ID]>
+                </kendo-chart-series-item>
+                <kendo-chart-series-item type="column" name="Other" color=#aaa [data]=sOTHER_DAY[dataItem.ROW_ID]>
+                </kendo-chart-series-item>
+              </kendo-chart-series>
+
+            </kendo-sparkline>
+
+            <span *ngIf="(!editMode[dataItem.ROW_ID] || column.isEditable == false) && column.field != 'TRAILIS' && column.field != 'TRAILISDAY' && !column.hiddenLabel && column.dataType != 'checkBox'" >
+              {{getValue(column.field, dataItem[column.field], column.dataType)}}
+            </span>
+
+            <div *ngIf="editMode[dataItem.ROW_ID] && column.isEditable == true" style="width: 100%;">
+              <!--// 0 - Stringa
+              // 4 - Numerico
+              // 2 - Combo
+              // 21 - Check list-->
+
+              <input *ngIf ="column.domainType == '0' || column.domainType == '21'"
+                    (blur)="putValueInGrid($event.target.value, column.field, dataItem.ROW_ID)"
+                    (change)="enableSave()"
+                    (click)="$event.target.select()"
+                    style = "width: 90%;" type = "text"
+                    value="{{getValue(column.field, dataItem[column.field], column.dataType)}}" />
+
+              <img *ngIf ="column.domainType == '21'"
+                  (click)="updateCheckList(column.field, dataItem[column.field], column.dataType, dataItem.ROW_ID, column.domain, column.domainType)"
+                  src='assets/img/icons/format-list-checks.png' alt=''
+                  title='Update Check List' class="k-button" style="width: 25px; border: 0px; padding: 0px; cursor: pointer;" />
+
+              <input *ngIf ="column.domainType== '4'"
+                    (blur)="putValueInGrid($event.target.value, column.field, dataItem.ROW_ID)"
+                    style = "width: 100%;" type = "number"
+                    (change)="enableSave()"
+                    value="{{getValue(column.field, dataItem[column.field], column.dataType)}}" />
+              <select *ngIf ="column.domainType== '1' || column.domainType== '12'"
+                    style = "width: 100%;"
+                    (change)="putValueInGrid($event.target.value, column.field, dataItem.ROW_ID)">
+                <option *ngFor="let c of getComboValues(column.domain)" [ngValue]="c.VALUE_STR"
+                  [selected]='c.VALUE_STR==getValue(column.field, dataItem[column.field], column.dataType)'>
+                  {{c.VALUE_STR}}
+                </option>
+              </select>
+              <!-- <span *ngIf ="column.domainType== '21'" >
+                  {{getValue(column.field, dataItem[column.field], column.dataType)}} &nbsp;
+              </span>-->
+            </div>
+
+            <input *ngIf="column.dataType == 'checkBox'" style="zoom: 1.2;"
+                  type="checkbox"
+                  name="select"
+                  (change)="changeCheckBox(dataItem)"
+                  [checked]="dataItem[column.field] == 'Y'" />
+          </div>
+         </ng-template>
+       </kendo-grid-column>
+      </ng-template>
+    </kendo-grid-column-group>
+
+    <kendo-grid-excel fileName="{{title}}_{{dateNow | date: 'yyyyMMdd_HHmm'}}.xlsx"  [fetchData]="excelData"></kendo-grid-excel>
+
+    <kendo-grid-pdf fileName="{{title}}_{{dateNow | date: 'yyyyMMdd_HHmm'}}.pdf" [allPages]="false"
+      paperSize="A3" [repeatHeaders]="true" [landscape]="true" [scale]="0.5" >
+      <kendo-grid-pdf-margin top="2cm" left="1cm" right="1cm" bottom="2cm"></kendo-grid-pdf-margin>
+      <ng-template kendoGridPDFTemplate let-pageNum="pageNum" let-totalPages="totalPages">
+      <div class="page-template">
+          <div class="header">
+            {{title}}
+            <!-- <div style="float: right">Page {{ pageNum }} of {{ totalPages }}</div>-->
+          </div>
+          <div class="footer">
+            Page {{ pageNum }} of {{ totalPages }}
+          </div>
+        </div>
+      </ng-template>
+    </kendo-grid-pdf>
+  </kendo-grid>
+
+<!-- POPUP GRID
+<div [style.left.px]="divGridPosX" [style.top.px]="divGridPosY" style="position: absolute; background-color: blanchedalmond; height: 100px; width: 200px; z-index: 1300;" *ngIf="showPopupGrid">
+  <textarea type="text" style="width: 99%; height: 100px; overflow: hidden; resize: none; padding: 10px; border: 1px solid #999;" #inputTarget [value]="textInfoGrid">
+  </textarea>
+</div> -->
+
+<!-- POPUP CHECK LIST -->
+<kendo-popup [popupClass]="'content popup'" [animate]="animate" (anchorViewportLeave)="showCheckList = false" *ngIf="showCheckList" style="z-index: 1100;">
+  <div style="max-height: 50vh; min-height: 15vh; overflow: hidden; display: flex;">
+    <div style="width: 49%; float: left; overflow: auto; border: 1px solid #999; padding: 2px;">
+      <div *ngFor="let n of checkListRowsSel">
+        <input type="checkbox" [checked]="n.CHECKED == 'true'" (click)="clickCheckList(true, n.VALUE_STR)">&nbsp;{{n.VALUE_STR}}
+      </div>
+    </div>
+    <div style="width: 50%; float: left; overflow: auto; border: 1px solid #999; margin-left: 2px; padding: 2px;">
+      <div *ngFor="let n of checkListRowsUnsel">
+        <input type="checkbox" [checked]="n.CHECKED == 'true'" (click)="clickCheckList(false, n.VALUE_STR)">&nbsp;{{n.VALUE_STR}}
+      </div>
+    </div>
+  </div>
+  <div style="width: 100%; height: 50px; padding: 5px; text-align: right;">
+      <button class="k-button" (click)="saveCheckList()" style="width: 100px;">Save</button>
+      <button class="k-button" (click)="showCheckList = false" style="width: 100px;">Close</button>
+  </div>
+</kendo-popup>
+
+<!-- POPUP INFO -->
+<kendo-popup [popupClass]="'content popup'" [animate]="animate" (anchorViewportLeave)="showPopup = false" *ngIf="showPopup" style="z-index: 1100;">
+  <textarea type="text" style="width: 99%; overflow: auto; resize: none; padding: 10px; min-height: 40vh; max-height: 85vh; border: 0px; background-color: #f9f7e7;" #inputTarget [value]="textInfo">
+  </textarea>
+  <div style="width: 100%; height: 50px; padding: 5px; text-align: right;">
+      <button class="k-button" [ngxClipboard]="inputTarget" style="width: 100px;">Copy</button>
+      <button class="k-button" (click)="showPopup = false" style="width: 100px;">Close</button>
+  </div>
+</kendo-popup>
+
+<!-- POPUP PARAMETERS OF REQUESTS -->
+<kendo-popup [popupClass]="'content popup'" [animate]="animate" (anchorViewportLeave)="showPopupParameters = false"
+  *ngIf="showPopupParameters">
+  <div style="width: 100%; background-color: #AAA;">
+    <div style="width: 24%; float: left; padding: 2px;">
+        <span style="color: #fff">NAME</span>
+    </div>
+    <div style="width: 24%; float: left; padding: 2px;">
+        <span style="color: #fff">DESCRIPTION</span>
+    </div>
+    <div style="width: 24%; float: left; padding: 2px;">
+        <span style="color: #fff">VALUE</span>
+    </div>
+    <div style="width: 24%; float: left; padding: 2px;">
+        <span style="color: #fff">DOMAIN</span>
+    </div>
+  </div>
+  <div *ngFor="let n of requestParameterList" [ngStyle]="{'background-color': getBackColorReqPar()}">
+    <div style="width: 99%; margin-top: 1px; margin-left: 3px; margin-right: 3px;">
+      <div style="width: 24%; height: 25px; float: left; padding: 2px;">
+          {{n.NAME}}
+      </div>
+      <div style="width: 24%; height: 25px; float: left; padding: 2px;">
+          {{n.DESCRIPTION}}
+      </div>
+      <div style="width: 24%; height: 25px; float: left; padding: 2px;">
+          <input *ngIf="n.IS_NUMERIC" type="number" id="nopNumber"
+            style="width: 30%; height: 23px;" [(ngModel)]="n.DEFAULT_NAME" >
+          <input *ngIf="!n.IS_NUMERIC" type="text" id="nopText"
+            style="width: 99%; height: 23px;"  [(ngModel)]="n.DEFAULT_NAME">
+          <!-- {{n.DEFAULT_NAME}} -->
+      </div>
+      <div style="width: 24%; height: 25px; float: left; padding: 2px;">
+          {{n.DOMAIN}}
+      </div>
+    </div>
+  </div>
+  <div style="width: 100%; height: 35px; padding-top: 3px; text-align: right;">
+      <button class="k-button" (click)="saveParameters();" style="width: 100px;">Save</button>
+      <button class="k-button" (click)="showPopupParameters = false" style="width: 100px;">Close</button>
+  </div>
+</kendo-popup>
+
+<app-dialog></app-dialog>

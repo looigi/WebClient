@@ -1,0 +1,32 @@
+<div *ngIf="ErrorMessageIsVisible" class="modal fade show in danger" id="myModal" role="dialog">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div *ngIf="!aboutMask" class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">
+                <span [ngStyle]="{'color': getTitleColor()}">
+                  {{title}}
+                </span>
+              </h4>
+          </div>
+          <div *ngIf="!aboutMask" class="modal-body">
+              <p>{{ErrorMsg}}</p>
+          </div>
+
+          <div *ngIf="aboutMask" class="modal-body">
+              <div class=" text-center">
+                  <!-- logo -->
+                  <img  src="assets/img/BrandingElements/AntsLogo.png" style="max-width: 280px;">
+                  <br />
+                  Client Version: {{clientVersion}}
+                  <br />
+                  Build Date: {{buildDate}}
+              </div>
+          </div>
+
+          <div class="modal-footer">
+              <button type="button" class="btn btn-default" (click)="hideErrorMsg()">Close</button>
+          </div>
+      </div>
+  </div>
+</div>

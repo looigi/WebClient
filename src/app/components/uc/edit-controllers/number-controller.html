@@ -1,0 +1,12 @@
+<div class="form-group col-md-12">
+  <label>{{name}}:
+    <i style="font-style: normal; font-weight: normal;" *ngIf="this.data.payload.PrmList[0].Description">
+      {{' ' + this.data.payload.PrmList[0].Description + ' '}}
+    </i>
+  </label>
+  <input #number type="number"
+         class="form-control"
+         [value]="this.data.payload.PrmList[0].Value"
+         (change)="this.data.payload.PrmList[0].Value=number.value;this.submit();"
+  >
+</div>

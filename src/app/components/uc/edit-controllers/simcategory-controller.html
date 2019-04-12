@@ -1,0 +1,50 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <h4>SIM CATEGORY</h4>
+
+    <p class="text-center" *ngIf="loadingSimCat">
+      Loading...<br>
+      <img src="assets/img/img/loader.gif" height="60">
+    </p>
+
+
+    <div class="row"*ngIf="!loadingSimCat">
+      <div class="col-md-9">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">SIM</label>
+            <div class="col-sm-10">
+              <select class="form-control">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
+          </div>
+        </form>
+
+      </div>
+      <div class="col-md-3">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isMapShown" class="modal fade" bsModal #mapModal="bs-modal" [config]="{show: true, backdrop: 'static'}"
+     tabindex="-1" role="dialog" aria-labelledby="mapModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Select a value</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideMap()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Qui ci va la mappa
+      </div>
+    </div>
+  </div>
+</div>

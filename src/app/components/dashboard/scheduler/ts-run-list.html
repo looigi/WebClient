@@ -1,0 +1,67 @@
+<!-- <h3>TS Run List</h3>
+<p class="text-center" *ngIf="requestInProgress">
+  Loading...<br>
+  <img src="assets/img/img/loader.gif" height="60">
+</p>
+
+<kendo-grid *ngIf="!requestInProgress"
+            [kendoGridBinding]="gridData"
+            [pageSize]="state.take"
+            [skip]="state.skip"
+            [sort]="state.sort"
+            [filter]="state.filter"
+            [sortable]="true"
+            [selectable]="true"
+            [resizable]="true"
+            [pageable]="{
+              buttonCount: 5,
+              info: true,
+              pageSizes: true
+            }"
+            [filterable]="true"
+            (dataStateChange)="dataStateChange($event)"
+            (selectionChange)="selectionChanged($event)"
+>
+  <ng-template kendoGridToolbarTemplate *ngIf="!requestInProgress">
+    <div class="row">
+        <div class="col-md-12 c-slim" style="padding-bottom: 2px;">
+          <img class="k-button" src='assets/img/icons/View.png' alt='' title='Show row' />
+        </div>
+    </div>
+  </ng-template>
+
+  <kendo-grid-column field="ANTS_ID" title="ANTS ID">
+  </kendo-grid-column>
+  <kendo-grid-column field="TD_FOLDER" title="TD Folder">
+  </kendo-grid-column>
+  <kendo-grid-column field="TD_NAME" title="TD Name">
+  </kendo-grid-column>
+  <kendo-grid-column field="FirstOrderedOn" title="First Ordered On" filter="date" format="{0:d}">
+  </kendo-grid-column>
+  <kendo-grid-column field="UnitPrice" title="Unit Price" filter="numeric" format="{0:c}">
+  </kendo-grid-column>
+  <kendo-grid-column field="Discontinued" filter="boolean">
+    <ng-template kendoGridCellTemplate let-dataItem>
+      <input type="checkbox" [checked]="dataItem.Discontinued" disabled/>
+    </ng-template>
+  </kendo-grid-column>
+</kendo-grid> -->
+
+<div style="height: 95vh;">
+  <!-- <p class="text-center" *ngIf="eventSimInProgress">
+    Loading...<br>
+    <img src="assets/img/img/loader.gif" height="60">
+  </p>
+
+  <h3 *ngIf="!requestInProgress">...No Data!</h3> -->
+
+  <ants-grid *ngIf="gridData && !requestInProgress"
+     [title]="'TS Run List'"
+     [data]="gridData"
+     [maskName]="'ts-run-list'"
+     [icoPath]="'assets/img/icons/'"
+     (itemSelected)="selectionChanged($event)"
+  ></ants-grid>
+
+  <div *ngIf="requestInProgress" class="k-i-loading"></div>
+</div>

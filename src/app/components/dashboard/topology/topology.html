@@ -1,0 +1,9 @@
+<div style="display: flex; flex-direction: column; height: 100vh; width: 100%; ">
+    <div style="overflow:hidden; padding: 7px; background-color: #f8f8f8; width: 100%;">
+      <router-outlet name='header'></router-outlet>
+    </div>
+    <div style="overflow:hidden; width: 100%; flex-grow: 1;
+        height: 100% !important; /* border: 1px solid red; */">
+        <router-outlet name="page"></router-outlet>
+    </div>
+</div>

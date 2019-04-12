@@ -1,0 +1,20 @@
+<kendo-splitter orientation="vertical" style="height: 100%;">
+  <kendo-splitter-pane size="50%" [collapsible]='true'>
+      <ad-hoc [filter]="td" (itemSelected)='onAdHocScenarioSelected($event)'
+      ></ad-hoc>
+  </kendo-splitter-pane>
+  <kendo-splitter-pane>
+      <kendo-splitter orientation="horizontal" style="width: 100%;" >
+          <kendo-splitter-pane size="35%" [collapsible]='true' style="overflow: hidden;">
+            <adhoc-list-scenario *ngIf="ts" [filter]="ts" (itemSelected)='onAdHocTcRunSelected($event)'>
+            </adhoc-list-scenario>
+          </kendo-splitter-pane>
+          <kendo-splitter-pane style="overflow: hidden;">
+            <!-- <adhoc-list-tcrun *ngIf="ts" [filter]="ts">
+            </adhoc-list-tcrun> -->
+            <tc-run-list *ngIf="tc" [filter]="tc" [father]="'adHocTCRun'">
+            </tc-run-list>
+          </kendo-splitter-pane>
+        </kendo-splitter>
+  </kendo-splitter-pane>
+</kendo-splitter>

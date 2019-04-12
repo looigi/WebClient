@@ -1,0 +1,127 @@
+
+
+<!-- <div class="row">
+  <div class="col-md-6">
+    <div class="col-md-12" style="padding-bottom:5px" *ngIf="measures">
+      Measure
+      <kendo-dropdownlist
+        [data]="measures"
+        [value]="measure"
+        [valuePrimitive]="true"
+        (selectionChange)="selectMeasure($event)"
+      >
+      </kendo-dropdownlist>
+    </div>
+    <div class="col-md-12">
+      <report-map-results *ngIf="displayReport=='Map'"
+                          [markers]="reportResult"
+                          [markerCategory]="measure"
+                          [selection]= "selection"
+                          (markerSelected)="selectionChanged($event)"
+      >
+      </report-map-results>
+    </div>
+  </div>
+  <div class="col-md-6" style="padding-top:30px">
+    <ants-grid
+      #Grid1
+      [title]="'Report'"
+      [data]="reportResult"
+      [idProperty] = "keyDimension"
+      [selection]= "selection"
+      (itemSelected)=selectionChanged($event)
+    ></ants-grid>
+  </div>
+
+  <div *ngIf="requestInProgress" class="k-i-loading"></div>
+</div> -->
+
+<div class="col-md-12 k-form" style="overflow: hidden;">
+  <form  >
+    <div class="row">
+      <div class="col-md-10" style="margin: -25px;">
+        <filter-time
+          [filter] = filter
+          (onFilterApply)="queryFilter($event)"
+          (onCriteriaSelect)="showFilterLock($event)"
+        ></filter-time>
+      </div>
+      <!-- <label> -->
+      <div class="col-md-2" style="margin-top: -10px;">
+        Filter Lock
+        <kendo-switch [(ngModel)]="filterLock"
+                      [onLabel]="'Yes'"
+                      [offLabel]="'NO'"
+                      name="filterLock"
+        >
+        </kendo-switch>
+      </div>
+      <!-- </label> -->
+    </div>
+  </form>
+</div>
+
+<!-- <h3 *ngIf="!reportResult && !requestInProgress">...No Data!</h3> -->
+
+<kendo-splitter orientation="vertical" style="height: 82vh;">
+    <kendo-splitter-pane size="50%" [collapsible]="true">
+      <kendo-splitter orientation="horizontal" style="width: 100%;">
+          <kendo-splitter-pane style="overflow: hidden;">
+              <ants-grid
+                #Grid1
+                [title]="titleReport"
+                [data]="reportResult"
+                [idProperty] = "keyDimension"
+                [selection]= "selection"
+                [maskName]="maskName"
+                (itemSelected)=selectionChanged($event)
+                ></ants-grid>
+
+                <div *ngIf="requestInProgress" class="k-i-loading"></div>
+          </kendo-splitter-pane>
+          <kendo-splitter-pane *ngIf="showMap" size="50%" [collapsible]="true">
+            <div class="col-md-12" style="margin-left: 0px; margin-right: 0px; width: 99%;">
+              <!-- *ngIf="displayReport=='Map'" -->
+                <report-map-results
+                  [markers]="reportResult"
+                  [markerCategory]="measure"
+                  [selection]= "selection"
+                  (markerSelected)="selectionChanged($event)"
+                >
+            </report-map-results>
+            <div class="col-md-12" style="position: absolute; left: 5px; top: 5px;  height: 5vh;">
+                Measure
+                <kendo-dropdownlist
+                    [data]="measures"
+                    [value]="measure"
+                    [valuePrimitive]="true"
+                    (selectionChange)="selectMeasure($event)"
+                >
+                </kendo-dropdownlist>
+              </div>
+            </div>
+          </kendo-splitter-pane>
+      </kendo-splitter>
+    </kendo-splitter-pane>
+    <kendo-splitter-pane style="overflow: hidden;">
+      <!-- *ngIf="tc" -->
+        <tc-run-list [filter]="tc" [father]="'report'">
+        </tc-run-list>
+    </kendo-splitter-pane>
+</kendo-splitter>
+
+
+
+<!--
+<div class="row">
+  <div class="col-md-12">
+  </div>
+</div>
+ -->
+
+
+
+
+
+
+

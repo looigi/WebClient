@@ -1,0 +1,119 @@
+<div *ngIf="tcRunId" style="width: 100%; height: 100% !important; padding-top: 3px; /* border: 1px solid blue; */ overflow-x: hidden;">
+    <div class="btn-toolbar pull-right">
+      <div style="float: left; margin-right: 10px; margin-top: 7px;">
+        <img *ngIf="tcStatus !== 'Automatic'" (click)="loadAll()" src='assets/img/icons/Refresh.png' alt='' title='Reload TcRun' style="border: 0px; padding: 0px; cursor: pointer;" />
+        {{title}}
+      </div>
+      <div style="float: right;">
+        <button type="button"
+                *ngIf="tcStatus !== 'Automatic'"
+                class="btn btn-danger"
+                (click)="modalService.modalShow({'modal': 'tcDetail', 'action': 'close'})"
+        >
+          Close <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+
+    <tabset>
+      <tab heading="Parameters" class="tab-content" style="height: 87vh;">
+        <ants-grid
+          #Grid1
+          [title]="'TC Run Parameters'"
+          [maskName]="maskName1"
+          [data]="tcRunParameters"
+          ></ants-grid>
+
+        <div *ngIf="!tcRunParameters" class="k-i-loading"></div>
+      </tab>
+
+      <tab heading="Measures" class="tab-content" style="height: 87vh;">
+            <ants-grid
+              #Grid2
+              [title]="'TC Run Measures'"
+              [maskName]="maskName2"
+              [data]="tcRunMeasures"
+            ></ants-grid>
+
+            <div *ngIf="!tcRunMeasures" class="k-i-loading"></div>
+      </tab>
+
+      <tab heading="Trace" class="tab-content" style="margin-left: 15px; height: 87vh;">
+        <div class="row">
+          <kendo-splitter orientation="horizontal" size="100%" style="width: 100%;">
+            <kendo-splitter-pane [collapsible]="true" size="20%" style="overflow: hidden;">
+            <tc-run-deail-trace-tree
+              *ngIf="tcRunTraceTree"
+              [tcRunTraceTree]="tcRunTraceTree"
+              (tcRunTraceFilter)="getTcRunTraceL3Filtered($event)"
+            >
+            </tc-run-deail-trace-tree>
+          </kendo-splitter-pane>
+
+          <kendo-splitter-pane style="overflow:hidden;">
+            <div style="height: 90vh; width: 99%;">
+              <kendo-splitter orientation="vertical" size="100%" style="height: 93vh;">
+                <kendo-splitter-pane size="50%" style="overflow: hidden;">
+                  <ants-grid
+                    #Grid3
+                    *ngIf="tcRunTraceL3Filtered && tcRunTraceL3"
+                    [title]="'TC Run Trace'"
+                    [maskName]="maskName3"
+                    [data]="{
+                        DataTable: tcRunTraceL3Filtered,
+                        GridProperty: tcRunTraceL3.GridProperty,
+                        ColumnProperty: tcRunTraceL3.ColumnProperty
+                      }"
+                  ></ants-grid>
+
+                  <div *ngIf="!tcRunTraceL3Filtered && !tcRunTraceL3" class="k-i-loading"></div>
+                </kendo-splitter-pane>
+
+                <kendo-splitter-pane style="overflow: hidden;">
+                  <div *ngIf="l3Text" style="height: 98%; width:99%; overflow: auto;">
+                    <pre style="height: 94%;">{{l3Text}}</pre>
+                  </div>
+                </kendo-splitter-pane>
+              </kendo-splitter>
+            </div>
+            </kendo-splitter-pane>
+        </kendo-splitter>
+        </div>
+      </tab>
+
+      <tab heading="Files" class="tab-content" style="margin-left: 15px; height: 87vh;">
+          <div class="row">
+            <kendo-splitter orientation="horizontal" size="100%" style="width: 100%; height: 90vh;">
+                <kendo-splitter-pane [collapsible]="true" size="35%" style="overflow: hidden;">
+                  <div *ngIf="tcRunFilesLoading" class="k-i-loading"></div>
+
+                  <ants-grid
+                    #Grid4
+                    [title]="'TC Run Files'"
+                    [maskName]="maskName4"
+                    [data]="tcRunFiles"
+                  ></ants-grid>
+
+                </kendo-splitter-pane>
+
+                <kendo-splitter-pane style="overflow: hidden;">
+                    <iframe *ngIf="url" width="99%" height="99%" [src]="url"></iframe>
+                </kendo-splitter-pane>
+              </kendo-splitter>
+          </div>
+      </tab>
+
+      <tab heading="Requests" class="tab-content" style="margin-left: 15px; height: 87vh;">
+        <div class="row">
+          <ants-grid
+            #Grid5
+            [title]="'TC Requests'"
+            [maskName]="maskName5"
+            [data]="requests"
+          ></ants-grid>
+
+          <div *ngIf="!requestsLoad" class="k-i-loading"></div>
+        </div>
+    </tab>
+  </tabset>
+</div>

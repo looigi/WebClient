@@ -1,0 +1,42 @@
+<div class="panel panel-default" *ngIf="tupleTechList">
+  <div class="panel-heading">
+    <strong>Step 3: apply the selected PLMN/tech to a Role</strong>
+  </div>
+  <div class="panel-body panel-no-space">
+    <!--<div class="row table-responsive">-->
+    <table class="table table-condensed table-no-space">
+      <thead>
+      <tr>
+        <th></th>
+        <th>Role</th>
+        <th>Site ID</th>
+        <th>Operator</th>
+        <th>PLMN</th>
+        <th>Tech</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let tupleTech of tupleTechList let i=index"
+      >
+        <td>
+          <button type="button" class="btn btn-success btn-xs" (click)="selectRoleSite(i)" >
+            Apply<!-- <span class="glyphicon glyphicon-share-alt"></span> -->
+          </button>
+        </td>
+        <td>{{tupleTech.roleSite}}</td>
+        <td>{{tupleTech.siteId}}</td>
+        <td>{{tupleTech.plmnName}}</td>
+        <td>{{tupleTech.plmnCode}}</td>
+        <td>{{tupleTech.techName}}</td>
+        <td>
+          <button type="button" class="btn btn-danger btn-xs" (click)="resetRoleSite(i)" data-tooltip="Revert to previous value." data-tooltip-position="bottom" >
+            Reset<!-- <span class="glyphicon glyphicon-repeat"></span> -->
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <!--</div>-->
+  </div>
+</div>

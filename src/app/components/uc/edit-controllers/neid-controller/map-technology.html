@@ -1,0 +1,28 @@
+  <sebm-google-map [fitBounds]="latlngBounds"
+                  [disableDefaultUI]="true"
+                  [streetViewControl]="false"
+                  [zoomControl]="false"
+                  [styles]="styles"
+                  (boundsChange)="boundsChanged($event)"
+                  #map
+  >
+    <sebm-google-map-marker *ngFor="let site of sitesList"
+                            [latitude]="getSiteLat(site)"
+                            [longitude]="getSiteLng(site)"
+                            [title]="site.LABEL"
+                            [zIndex]='98'
+                            iconUrl="{{urlIcons + getIconStatus(site.RTU_STATUS)}}"
+                            [opacity]="0.8"
+                            (markerClick)="siteClicked(site)"
+    >
+
+    </sebm-google-map-marker>
+
+    <sebm-google-map-marker *ngFor="let mark2 of markers2"
+      [latitude]="mark2.latitude"
+      [longitude]="mark2.longitude"
+      [zIndex]='99'
+      [title]="cutValue(mark2.title)"
+      [iconUrl]="mark2.icon" >
+    </sebm-google-map-marker>
+  </sebm-google-map>

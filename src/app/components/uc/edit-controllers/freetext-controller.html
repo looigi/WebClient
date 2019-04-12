@@ -1,0 +1,17 @@
+<div class="form-group col-md-12">
+  <label>{{name}}:
+    <i style="font-style: normal; font-weight: normal;" *ngIf="this.data.payload.PrmList[0].Description">
+      {{' ' + this.data.payload.PrmList[0].Description + ' '}}
+    </i>
+  </label>
+
+  <input #freetxt
+         [(ngModel)]="selectedItem"
+         class="form-control"
+         title="Typeahead filter, the list is limited to first 20 ones. Refine the filter to list the searched one"
+         [typeahead]="options"
+         typeaheadOptionField="CODE"
+         (typeaheadOnSelect)="onSelect($event)"
+         (blur)="update(freetxt.value)"
+  >
+</div>

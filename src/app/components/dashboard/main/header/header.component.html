@@ -1,0 +1,85 @@
+﻿<!--<nav class="navbar navbar-default navbar-fixed-top" ng-controller="HeaderCtrl">
+  <div class="container-fluid">-->
+      <div class="row" style="white-space: nowrap; height: 40px; display: flex; overflow: hidden;">
+          <div class="col-md-2" style="text-align: left;">
+            <img src="assets/img/BrandingElements/AntsIcon.png" style="height: 25px; margin-right: 5px;">
+            <img src="assets/img/BrandingElements/CompanyLogo.png" style="height: 25px; margin-right: 5px;">
+            <img src="assets/img/BrandingElements/CustomerLogo.png" style="height: 25px; margin-right: 5px;">
+          </div>
+
+          <div class="col-md-7" style="text-align: center; margin-top: 9px; overflow: hidden;">
+            <div style="width: 100%; float: left; height: 25px;">
+              <span title="Platform Name." style="color:darkgray; font-size: 14px; ">{{platformName}} </span>
+              <span title="{{symb_TimeStamp}}" style="color:darkgray; font-size: 14px; ">{{dateNowH}}</span> <!-- {{dateNow | date: 'yyyy-MM-dd HH:mm'}} -->
+            </div>
+          </div>
+        </div>
+      <!-- </div>
+    </nav>-->
+
+    <form class="navbar-form navbar-right" style="margin-top: -3px; padding: 0px !important; margin-bottom: 0px !important;">
+        <div id="navbar" class="col-md-2" style="position: absolute; padding-left: 80px; right: 6px; top: -3px; height: 45px; padding-top: 3px; z-index: 1499; white-space: nowrap; background-color: #f8f8f8;">
+          <ul class="nav navbar-nav navbar-right" style="width: auto; ">
+            <li class="dropdown" dropdown>
+            <a dropdownToggle *ngIf="showButtons" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <img  style="height: 17px" src="assets/img/img/no_image_user.png">&nbsp;{{userName}}<span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" *dropdownMenu style="background-color: #fff;">
+              <li *ngIf="showButtons"  style="background-color: #fff;"><a (click)="profileComp.openModal(profileComp.template)"><img src='assets/img/img/no_image_user.png' height='20' width='20'  alt=''>&nbsp;Profile</a></li>
+              <li *ngIf="showButtons"  style="background-color: #fff;"><a (click)="changePswComp.openModal(changePswComp.template)"><img src='assets/img/icons/ChangePassword.png' height='20' width='20'  alt=''>&nbsp;Change Password </a></li>
+              <li *ngIf="showButtons"  style="background-color: #fff;"><a (click)="resetLayout()"><img src='assets/img/icons/ResetLayout.png' height='20' width='20'  alt=''>&nbsp;Reset Layout</a></li>
+              <li *ngIf="showButtons"  style="background-color: #fff;"><a (click)="about()"><img src='assets/img/icons/About.png' height='20' width='20'  alt=''>&nbsp;About</a></li>
+              <li *ngIf="showButtons"  style="background-color: #fff;"><a (click)="logout()"><img src='assets/img/icons/logout.png' height='20' width='20'  alt=''>&nbsp;Logout</a></li>
+            </ul>
+          </li>
+          </ul>
+        </div>
+
+        <div id="navbar" class="col-md-2" style="position: absolute; right: 180px; top: -3px; height: 45px; padding-top: 3px; z-index: 1500; white-space: nowrap; background-color: #f8f8f8;">
+        <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+        </button> -->
+          <ul class="nav navbar-nav navbar-right" style="width: auto; ">
+            <li *ngIf="areRequests && showButtons" style="margin-top: 16px; cursor: pointer;" (click)="this.openRequests()">
+              <!-- <span class="k-icon k-i-comment" (click)="this.openRequests()"
+                style="border: 0px; padding: 0px; cursor: pointer; width: 40px;" title={{tooltipRequest}}
+                [ngStyle]="{'color': getReqColor()}"></span>Requests -->
+              <img src='assets/img/icons/Request.png' height='20' width='20' alt=''>&nbsp;Requests
+            </li>
+            <li ui-sref-active-if="dashboard" class="dropdown" dropdown>
+                <a dropdownToggle href="javascript:void(0)" *ngIf="showButtons" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <img src='assets/img/icons/dashboard.png' height='20' width='20'  alt=''>&nbsp;{{formName}}<span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu"  *dropdownMenu style="background-color: #fff;">
+                    <li style="background-color: #fff;"><a *ngIf='hideScheduler=="true" && showButtons' (click)="changePage('/dashboard/scheduler')"><img src='assets/img/icons/MonTests.png' height='20' width='20'  alt='' >&nbsp;Monitoring Tests</a></li>
+                    <li style="background-color: #fff;"><a *ngIf='hideReport=="true" && showButtons' (click)="changePage('/dashboard/report')" ><img src='assets/img/icons/Report.png' height='20' width='20'  alt=''>&nbsp;Report</a></li>
+                    <li style="background-color: #fff;"><a *ngIf='hideAdhoc=="true" && showButtons' (click)="changePage('/dashboard/ad-hoc')" ><img src='assets/img/icons/AdHocTests.png' height='20' width='20'  alt=''>&nbsp;Ad hoc Tests</a></li>
+                    <li style="background-color: #fff;"><a *ngIf='hideSiteCoverage=="true" && showButtons' (click)="changePage('/dashboard/techtopoloy')"><img src='assets/img/icons/SiteCoverage.png' height='20' width='20' alt=''>&nbsp;Site Coverage</a></li>
+                    <li style="background-color: #fff;"><a *ngIf='hideEventLog=="true" && showButtons' (click)="changePage('/dashboard/event-log')" ><img src='assets/img/icons/EventLog.png' height='20' width='20'  alt=''>&nbsp;Event Log</a></li>
+                    <li style="background-color: #fff;"><a *ngIf='hideSimManager=="true" && showButtons' (click)="changePage('/dashboard/sim-manager')" ><img src='assets/img/icons/SimManager.png' height='20' width='20'  alt=''>&nbsp;SIM Manager</a></li>
+                    <li style="background-color: #fff;"><a *ngIf='hidePortManager=="true" && showButtons' (click)="changePage('/dashboard/port-manager')" ><img src='assets/img/icons/PortManager.png' height='20' width='20'  alt=''>&nbsp;Port Manager</a></li>
+                    <li style="background-color: #fff;"><a *ngIf='hideAnalytics=="false" && showButtons' (click)="changePage('/dashboard/app-analytics')" ><img src='assets/img/icons/Analytics.png' height='20' width='20'  alt=''>&nbsp;Analytics</a></li>
+                </ul>
+            </li>
+          </ul>
+        </div>
+      </form>
+
+  <div *ngIf="showLog" class="col-md-12" style="margin-top: 5px; margin-bottom: 5px; width: 100%; height: 20px; background-color: #f3fbb1;">
+    <div style="width: 5%; float: left; text-align: center; height: 20px;">
+      <img style="margin-left: 15px; margin-top: -5px;" src='assets/img/icons/ResetLayout.png' height='20' width='20'  alt='' (click)="closeLog()" />
+    </div>
+    <div style="width: 95%; padding-left: 10px; float: left; text-align: left; height: 20px; overflow: overlay;">
+      <!-- <span style="width: 99%; height: 35px; overflow-y: auto; color: #555; white-space: pre-wrap;">{{logText}}</span> -->
+      <ul style="list-style-type: none;">
+        <li *ngFor="let logg of logText.slice().reverse(); index as i;">
+          <span [title]='getLogToolTip(i)' [style.color]="getLogColor(i)" style="cursor: pointer; width: 99%; height: 20px; white-space: pre-wrap;">{{ logg }}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+    <app-profile #profileComp [data]="userData"></app-profile>
+    <app-change-password #changePswComp></app-change-password>
+    <app-popup-requests></app-popup-requests>
+    <app-dialog></app-dialog>

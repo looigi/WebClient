@@ -1,0 +1,29 @@
+<div style="height: 100%;">
+  <!-- <p class="text-center" *ngIf="eventLogInProgress">
+    Loading...<br>
+    <img src="assets/img/img/loader.gif" height="60">
+  </p>
+
+  <h3 *ngIf="!eventLogResult && !eventLogInProgress">...No Data!</h3> -->
+
+  <ants-grid
+     #Grid1
+     [title]="'Event Log'"
+     [data]="eventLogResult"
+     [maskName]="maskName"
+     [icoPath]="'assets/img/icons/'"
+     (itemSelected)="selectionChanged($event)"
+  ></ants-grid>
+
+  <div *ngIf="eventLogInProgress" class="k-i-loading"></div>
+</div>
+
+<!-- <div style="position: absolute; bottom: 1px;">
+  <div class="col-md-12">
+    <br />
+    <label>Filter: </label>
+    <input type="text" [(ngModel)]="filter"  #titleInput>
+    <button type="submit" (click) = 'addTodo(titleInput.value)'>Go</button>
+  </div>
+</div> -->
+

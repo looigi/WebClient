@@ -1,0 +1,20 @@
+<div style="height: 100%;">
+  <!-- <p class="text-center" *ngIf="eventPortInProgress">
+  Loading...<br>
+  <img src="assets/img/img/loader.gif" height="60">
+</p>
+
+  <h3 *ngIf="!eventPort && !eventPortInProgress">...No Data!</h3> -->
+
+  <ants-grid
+            #Grid1
+            [title]="'Port'"
+            [data]="eventPort"
+            [icoPath]="'assets/img/icons/'"
+            (itemSelected)="selectionChanged($event)"
+            [maskName]="maskName"
+  ></ants-grid>
+
+  <div *ngIf="eventPortInProgress" class="k-i-loading"></div>
+</div>
+
